@@ -1,34 +1,43 @@
 <?php
 class pdam{
-    public $nama, $id, $jumlahPenggunaan, $biayaAdmin, $tarif, $total ;
+    public $nama, $id, $jumlahPenggunaan, $admin = 10000;
 
-    public function __construct ($nama, $id, $biayaAdmin){
+    public function __construct ($nama, $id, $jumlahPenggunaan){
     $this->nama = $nama;
     $this->id = $id;
-    $this->biayaAdmin = $biayaAdmin;
+    if ($jumlahPenggunaan < 10){
+        $this->jumlahPenggunaan = 10;
+    }else {
+        $this->jumlahPenggunaan = $jumlahPenggunaan;
+    }
     }
 
     public function getBiaya(){
-        if ($jumlahPenggunaan >= 1 && $jumlahPenggunaan <=10){
+        $tarif=0;
+        if ($this->jumlahPenggunaan >= 1 && $this->jumlahPenggunaan <=10){
         $tarif = 2000;
-        $biayaAdmin = 10000;
-        $total = $tarif + $biayaAdmin;
-    } elseif ($jumlahPenggunaan > 10 && $jumlahPenggunaan <= 20){
+    } elseif ($this->jumlahPenggunaan > 10 && $this->jumlahPenggunaan <= 20){
         $tarif = 3000;
-        $biayaAdmin = 10000;
-        $total = $tarif + $biayaAdmin;
-    } elseif ($jumlahPenggunaan > 20 && $jumlahPenggunaan <= 30){
+    } elseif ($this->jumlahPenggunaan > 20 && $this->jumlahPenggunaan <= 30){
         $tarif = 4000;
-        $biayaAdmin = 10000;
-        $total = $tarif + $biayaAdmin;
-    } elseif ($jumlahPenggunaan >= 31){
+    } elseif ($this->jumlahPenggunaan > 30){
         $tarif = 5000;
-        $biayaAdmin = 10000;
-        $total = $tarif + $biayaAdmin;
+        
     }   
+    $hasil = $this->jumlahPenggunaan * $tarif + $this->admin;
+        return $hasil;
 }
-$pdam1 = new pdam ("Ali",1,8);
-echo nl2br ("\n Tagihan " .$pdam1->nama. " id ".$pdam1->id. "sejumlah ".$pdam1->jumlahPenggunaan. "memakan biaya sebesar " .$pdam1->getBiaya());
+}
+    $pelanggan =[
+     new pdam(1,"Ali",9),
+     new pdam(2,"Budi",11),
+     new pdam(3,"Dani",24),
+     new pdam(4,"Edi",28),
+     new pdam(5,"Umar",50),
+     ];
+       for ($i=0; $i < count($pelanggan); $i++) { 
+      echo nl2br("Pelanggan : ".$pelanggan[$i]->nama ." Biaya: ".$pelanggan[$i]->getBiaya()."\n");
+  }
 
 
 
